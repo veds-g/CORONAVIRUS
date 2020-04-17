@@ -79,6 +79,7 @@
       </div>           
     </div>
   </div>
+  
   <script>
     async function getData(){
     const response= await fetch("https://api.covid19api.com/summary");
@@ -108,7 +109,6 @@
     }
     getData();
     </script>
-
 
     <script>
       async function getData1(){
@@ -146,31 +146,7 @@
     <h2 style="text-align: center;margin-top: 2%;">CASE COUNT</h2>
     
     <br>
-    <div class="container-fluid" style="width: 98%;">
-      <div class="row d-flex justify-content-around">  
-         
-          <div class="block-48 col-lg-3 col-12">
-            <span class="block-48-text-1">New Cases Today - <b style="color:honeydew;">Global</b></span>
-            <div class="block-48-counter ftco-number" id="counter1" data-number="">0</div>              
-          </div>  
-          <div class="block-48 col-lg-3 col-12">
-              <span class="block-48-text-1">Total Cases - <b style="color: honeydew;">Global</b></span>
-              <div class="block-48-counter ftco-number" id="counter4" data-number="" >0</div>
-            </div>       
-        
-          <div class="block-48 col-lg-3 col-12">
-              <span class="block-48-text-1">Recovered - <b style="color: honeydew;">Global</b></span>
-              <div class="block-48-counter ftco-number" id="counter3" data-number="" >0</div>
-            </div>
-
-            <div class="block-48 col-lg-3 col-12">
-              <span class="block-48-text-1">Deaths - <b style="color: honeydew;">Global</b></span>
-              <div class="block-48-counter ftco-number" id="counter2"  data-number="" >0</div>
-            </div>     
-        
-      </div>
-    </div>
-    <br>
+ 
     <div class="container-fluid" style="width:98%">
       <div class="row d-flex justify-content-around">  
 
@@ -192,6 +168,33 @@
             <span class="block-48-text-1">Deaths - <b style="color: honeydew;">India</b></span>
             <div class="block-48-counter ftco-number" id="counter8"  data-number="" >0</div>
           </div>      
+        
+      </div>
+    </div>
+
+    <br>
+
+    <div class="container-fluid" style="width: 98%;">
+      <div class="row d-flex justify-content-around">  
+         
+          <div class="block-48 col-lg-3 col-12">
+            <span class="block-48-text-1">New Cases Today - <b style="color:honeydew;">Global</b></span>
+            <div class="block-48-counter ftco-number" ><span id="counter1">0</span></div>              
+          </div>  
+          <div class="block-48 col-lg-3 col-12">
+              <span class="block-48-text-1">Total Cases - <b style="color: honeydew;">Global</b></span>
+              <div class="block-48-counter ftco-number" id="counter4" data-number="" >0</div>
+            </div>       
+        
+          <div class="block-48 col-lg-3 col-12">
+              <span class="block-48-text-1">Recovered - <b style="color: honeydew;">Global</b></span>
+              <div class="block-48-counter ftco-number" id="counter3" data-number="" >0</div>
+            </div>
+
+            <div class="block-48 col-lg-3 col-12">
+              <span class="block-48-text-1">Deaths - <b style="color: honeydew;">Global</b></span>
+              <div class="block-48-counter ftco-number" id="counter2"  data-number="" >0</div>
+            </div>     
         
       </div>
     </div>
