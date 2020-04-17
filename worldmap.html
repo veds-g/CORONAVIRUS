@@ -1,0 +1,53 @@
+<html>
+  <head>
+    <title>World Map - COVID-19 cases</title>
+    <link rel="icon" href="images/corona1.webp" type="image/webp" sizes="16x16">
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Overpass:300,400,500|Dosis:400,700" rel="stylesheet">
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/style.css">
+
+<!-- begining of the script ******************************************************************************************************-->
+    <script type="text/javascript">
+
+      google.charts.load('current', {
+        'packages':['geochart'],
+        'mapsApiKey': 'AIzaSyD-9tSrke72PouQMnMX-a7eZSW0jkFMBWY'
+      });
+      google.charts.setOnLoadCallback(drawRegionsMap);
+
+      async function drawRegionsMap() {
+        const response= await fetch("https://api.covid19api.com/summary");
+        const data5=await response.json();
+
+        const data1=[
+          ['Country', 'Active Cases']];
+
+        for(var i=1;i<=246;i++){
+            var foo1=data5.Countries[i-1].Country;
+            var foo2=data5.Countries[i-1].TotalConfirmed;
+            var temp=[foo1,foo2];
+            data1[i]=temp;   
+        }
+
+        var data = google.visualization.arrayToDataTable(data1);
+
+        var options = {title:"xxx"};
+
+        var chart = new google.visualization.GeoChart(document.getElementById('regions_div'));
+
+        chart.draw(data, options);
+      }
+    </script>
+<!-- end of the script *************************************************************************************************************-->
+
+
+
+
+  </head>
+  <body style="background-color:green;">
+    <h2 style="text-align: center;color: blanchedalmond;">World Map</h2>
+    <div id="regions_div" style="width: 100%;height: 80%;"></div>
+    <h2 style="color: honeydew;">Scale representing number of active COVID-19 cases</h2>
+  </body>
+</html>

@@ -1,0 +1,63 @@
+<html>
+  <head>
+    <title>India Map - COVID-19 cases</title>
+    <link rel="icon" href="images/corona1.webp" type="image/webp" sizes="16x16">
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Overpass:300,400,500|Dosis:400,700" rel="stylesheet">
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/style.css">
+
+
+
+<!-- begining of the script ******************************************************************************************************-->
+    <script type="text/javascript">
+
+      google.charts.load('current', {
+        'packages':['geochart'],
+        'mapsApiKey': 'AIzaSyD-9tSrke72PouQMnMX-a7eZSW0jkFMBWY'
+      });
+      google.charts.setOnLoadCallback(drawRegionsMap);
+
+      async function drawRegionsMap() {
+        const response= await fetch("https://api.covid19india.org/data.json");
+        const data5=await response.json();
+       // console.log(data5);
+        const data1=[
+          ['State', 'Active Cases']];
+            for(var i=1;i<=28;i++){
+            const foo1=data5.statewise[i].state;
+            const integer=data5.statewise[i].confirmed;
+            var foo2 = parseInt(integer, 10);
+            var temp=[foo1,foo2];
+            data1[i]=temp;
+        }
+        console.log(data1);
+        var data = google.visualization.arrayToDataTable(data1);
+
+        var options = {
+            region: 'IN', // India 
+            // displayMode: 'markers', //If you want to highlight some cities
+            resolution: 'provinces', //If you want to display provinces in India
+            colorAxis: {colors: ['green']} //If you want specific color for your markers (cities)
+          };
+
+        var chart = new google.visualization.GeoChart(document.getElementById('regions_div'));
+
+        chart.draw(data, options);
+      }
+    </script>
+<!-- end of the script *************************************************************************************************************-->
+
+
+
+
+  </head>
+  <body>
+    <body style="background-color:green;">
+        <h2 style="text-align: center;color: blanchedalmond;">India Map</h2>
+        <div id="regions_div" style="width: 100%;height: 80%;"></div>
+        <h2 style="color: honeydew;">Scale representing number of active COVID-19 cases</h2>
+      </body>
+    
+  </body>
+</html>

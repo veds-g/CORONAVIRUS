@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>India Statistics</title>
+    <link rel="icon" href="images/corona1.webp" type="image/webp" sizes="16x16">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/style.css">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script>src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"</script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+    <style>
+  #container { display:block; }
+
+@media only screen and (orientation:portrait){
+
+  #container {
+
+    height: 100vw;
+
+    -webkit-transform: rotate(90deg);
+
+    -moz-transform: rotate(90deg);
+
+    -o-transform: rotate(90deg);
+
+    -ms-transform: rotate(90deg);
+
+    transform: rotate(90deg);
+
+  }
+
+}
+
+@media only screen and (orientation:landscape){
+
+  #container {
+
+     -webkit-transform: rotate(0deg);
+
+     -moz-transform: rotate(0deg);
+
+     -o-transform: rotate(0deg);
+
+     -ms-transform: rotate(0deg);
+
+     transform: rotate(0deg);
+
+  }
+
+}
+    </style>
+</head>
+
+<body style="background-color:whitesmoke" id="container">
+
+
+<h1 style="text-align: center;font-family: Roboto;">Cases Timeline - India</h1>
+<h4 style="text-align: center;font-family: Roboto;">(Click/Tap the points/bars below for exact number)</h4>
+
+<div style="width: 80%;height: 100%;margin-left: 10%;" ><canvas id="myChart" width="400" height="200" ></canvas></div>
+<br>
+<div class="container-fluid">
+    <div class="col-lg-6 col-md-3 col-12">
+<canvas id="myChart1" width="400" height="200" ></canvas>
+</div>
+<div class="col-lg-6 col-md-3 col-12">
+<canvas id="myChart2" width="400" height="200" "></canvas>
+</div>
+</div>
+
+<div class="table-responsive" style="font-family: Roboto;font-size: large;font-weight: 700;" >
+    <table class="table" id="stateWise">
+        <colgroup>
+            <col style="background-color:white">
+            <col style="background-color:yellow">
+            <col style="background-color: rgb(74, 184, 184)">
+            <col style="background-color: tomato;">
+            <col style="background-color: rgb(58, 204, 44);">
+            
+          </colgroup>
+        <thead>
+          <tr style="font-size: larger; ">
+            <th class=" verticalSplit bg-dark" style="color: white;padding-left: 3rem;">States</th>
+            <th class=" verticalSplit bg-dark" style="color: white;text-align: center;">Confirmed</th>
+            <th class=" verticalSplit bg-dark" style="color: white;text-align: center;">Active</th>
+            <th class=" verticalSplit bg-dark" style="color: white;text-align: center;">Deaths</th>
+            <th class=" verticalSplit bg-dark" style="color: white;text-align: center;">Recovered</th>
+          </tr>
+        </thead>
+    </table>
+</div>
+
+<script>
+    // world's country wise stats--> "https://api.covid19api.com/";
+    // india's overall stats   -->  https://coronavirus-19-api.herokuapp.com/countries/india
+    // india's district wise stats   -->  https://api.covid19india.org/state_district_wise.json    -->https://api.covid19india.org/data.json
+   
+    const url="https://api.covid19india.org/data.json";
+    const xlabels=[];const ylabels=[];const y1labels=[];const y2labels=[];const y3labels=[];
+    const x2labels=[];const y4labels=[];
+    async function getData(){
+        const response= await fetch(url);
+        const data=await response.json();
+        console.log(data);
+        const stateWise=document.getElementById('stateWise');
+        
+        for(var i=0;i<data.cases_time_series.length;i=i+1)
+        {
+            xlabels.push(data.cases_time_series[i].date);
+        }
+        for(var i=0;i<data.cases_time_series.length;i=i+1)
+        {
+            ylabels.push(data.cases_time_series[i].totalconfirmed);
+            y1labels.push(data.cases_time_series[i].totalrecovered);
+            y2labels.push(data.cases_time_series[i].totaldeceased);
+            y3labels.push(data.cases_time_series[i].dailyconfirmed);
+        }
+        for(var i=1;i<=10;i++)
+        {
+            x2labels.push(data.statewise[i].state);
+            y4labels.push(data.statewise[i].confirmed);
+        }
+       for(var i=1;i<=38;i++)
+        {
+            var x=stateWise.insertRow();
+            x.insertCell(0);
+            stateWise.rows[i].cells[0].innerHTML=data.statewise[i-1].state;
+            x.insertCell(1);
+            stateWise.rows[i].cells[1].innerHTML=data.statewise[i-1].confirmed;
+            x.insertCell(2);
+            stateWise.rows[i].cells[2].innerHTML=data.statewise[i-1].active;
+            x.insertCell(3);
+            stateWise.rows[i].cells[3].innerHTML=data.statewise[i-1].deaths;
+            x.insertCell(4);
+            stateWise.rows[i].cells[4].innerHTML=data.statewise[i-1].recovered;
+        }
+    }
+     getData();
+// -->>   chart .js
+    var ctx = document.getElementById('myChart').getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: xlabels,
+            datasets: [{
+                label: 'Number of confirmed cases in india',
+                data: ylabels,
+                fill: false,
+                backgroundColor: 'yellow',
+                borderWidth: 1
+            },{
+                label: 'Number of recovered cases in India',
+                data: y1labels,
+                fill: false,
+                backgroundColor: ' rgb(58, 204, 44)',
+                borderWidth: 1
+            },{
+                label: 'Number of deaths in India',
+                data: y2labels,
+                fill: false,
+                backgroundColor: 'tomato',
+                borderWidth: 1
+            }]        
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+    });
+    var ctx = document.getElementById('myChart1').getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: xlabels,
+            datasets: [{
+                label: 'Daily confirmed cases in india(Double Click/Tap to Update)',
+                data: y3labels,
+                fill: false,
+                backgroundColor: 'rgb(201, 56, 201)',
+                borderWidth: 1
+            }]           
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+    });
+    var ctx = document.getElementById('myChart2').getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: x2labels,
+            datasets: [{
+                label: 'States with most no. of cases(Double Click/Tap to Update)',
+                data: y4labels,
+                fill: false,
+                backgroundColor: 'red',
+                borderWidth: 1
+            }]        
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+    });
+</script>   
+    
+</body>
+</html>

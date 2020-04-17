@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Global Stats</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Global Statistics</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/style.css">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> 
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+
+    <style>
+        #container { display:block; }
+      
+      @media only screen and (orientation:portrait){
+      
+        #container {
+      
+          height: 100vw;
+      
+          -webkit-transform: rotate(90deg);
+      
+          -moz-transform: rotate(90deg);
+      
+          -o-transform: rotate(90deg);
+      
+          -ms-transform: rotate(90deg);
+      
+          transform: rotate(90deg);
+      
+        }
+      
+      }
+      
+      @media only screen and (orientation:landscape){
+      
+        #container {
+      
+           -webkit-transform: rotate(0deg);
+      
+           -moz-transform: rotate(0deg);
+      
+           -o-transform: rotate(0deg);
+      
+           -ms-transform: rotate(0deg);
+      
+           transform: rotate(0deg);
+      
+        }
+      
+      }
+          </style>
+</head>
+<body style="background-color: whitesmoke;" id="container">
+
+    <h1 style="text-align: center;font-family: Roboto;">Cases Timeline - Global</h1>
+    <div><canvas id="myChart" width="400" height="150" ></canvas></div>
+
+<div class="table-responsive" style="font-family: Roboto;font-size: large;font-weight: 700;" >
+    <table class="table" id=CountryWise>
+        <colgroup>
+            <col style="background-color:white">
+            <col style="background-color: rgb(201, 56, 201)">
+            <col style="background-color: rgb(255, 0, 98)">
+            <col style="background-color: rgb(74, 184, 184)">
+            <col style="background-color:yellow">
+            <col style="background-color: tomato;">
+            <col style="background-color: rgb(58, 204, 44);">   
+            
+
+          </colgroup>
+        <thead>
+          <tr style="font-size: larger; ">
+            <th class=" verticalSplit bg-dark" style="color: white;padding-left: 3rem;">Countries</th>
+            <th class=" verticalSplit bg-dark" style="color: white;text-align: center;">New Confirmed</th>
+            <th class=" verticalSplit bg-dark" style="color: white;text-align: center;">New Deaths</th>
+            <th class=" verticalSplit bg-dark" style="color: white;text-align: center;">New Recovered</th>
+            <th class=" verticalSplit bg-dark" style="color: white;text-align: center;">Total Confirmed</th>
+            <th class=" verticalSplit bg-dark" style="color: white;text-align: center;">Total Deaths</th>
+            <th class=" verticalSplit bg-dark" style="color: white;text-align: center;">Total Recovered</th>
+          </tr>
+        </thead>
+    </table>
+</div>
+<script>
+    
+    const url="https://api.covid19api.com/summary";
+    const ylabels=[];const xlabels=[];
+    async function getData(){
+        const response= await fetch(url);
+        const data=await response.json();
+        const CountryWise=document.getElementById('CountryWise');
+        console.log(data.Global);
+        // for(var i=0;i<6;i++){
+            ylabels.push(data.Global.NewConfirmed);
+            ylabels.push(data.Global.NewDeaths);
+            ylabels.push(data.Global.NewRecovered);
+            ylabels.push(data.Global.TotalConfirmed);
+            ylabels.push(data.Global.TotalDeaths);
+            ylabels.push(data.Global.TotalRecovered);
+            xlabels.push("New Confirmed");
+            xlabels.push("New Deaths");
+            xlabels.push("New Recovered");
+            xlabels.push("Total Confirmed");
+            xlabels.push("Total Deaths");
+            xlabels.push("Total Recovered");
+     
+        
+        for(var i=1;i<=246;i++){
+            var x=CountryWise.insertRow();
+            x.insertCell(0);
+            CountryWise.rows[i].cells[0].innerHTML=data.Countries[i-1].Country;
+            x.insertCell(1);   
+            CountryWise.rows[i].cells[1].innerHTML=data.Countries[i-1].NewConfirmed;
+            x.insertCell(2);
+            CountryWise.rows[i].cells[2].innerHTML=data.Countries[i-1].NewDeaths;
+            x.insertCell(3);    
+            CountryWise.rows[i].cells[3].innerHTML=data.Countries[i-1].NewRecovered     ;
+            x.insertCell(4);    
+            CountryWise.rows[i].cells[4].innerHTML=data.Countries[i-1].TotalConfirmed;
+            x.insertCell(5);    
+            CountryWise.rows[i].cells[5].innerHTML=data.Countries[i-1].TotalDeaths;
+            x.insertCell(6);    
+            CountryWise.rows[i].cells[6].innerHTML=data.Countries[i-1].TotalRecovered;
+        }
+        console.log(data);
+     }
+     getData();
+     console.log(ylabels);
+     console.log(xlabels);
+     var ctx = document.getElementById('myChart').getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: xlabels,
+            datasets: [{
+                label: 'New confirmed Global Cases',
+                data: ylabels,
+                fill: false,
+                backgroundColor: ["rgb(201, 56, 201)","rgb(255, 0, 98)","rgb(74, 184, 184)","yellow","tomato","rgb(58, 204, 44)"],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+    });
+</script>
+</body>
+</html>
