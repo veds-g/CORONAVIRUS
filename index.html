@@ -85,26 +85,34 @@
     const response= await fetch("https://api.covid19api.com/summary");
     const data4=await response.json();
 
-    var newconfirmedworldwide=data4.Global.NewConfirmed;console.log(newconfirmedworldwide);  
+    var newconfirmedworldwide=data4.Global.NewConfirmed;console.log(newconfirmedworldwide); 
+    var counter = document.getElementById("counter1"); 
     var a = $('#counter1').data('number'); //getter
     var x=""+newconfirmedworldwide;
     $('#counter1').data('number',x); //setter
+    counter.innerHTML = x;
 
 
-    var deathsworldwide=data4.Global.TotalDeaths;          
+    var deathsworldwide=data4.Global.TotalDeaths;  
+    var counter = document.getElementById("counter2");         
     var b = $('#counter2').data('number'); //getter
     var y=""+deathsworldwide;
     $('#counter2').data('number',y); //setter
+    counter.innerHTML = y;
 
-    var recoveredworldwide=data4.Global.TotalRecovered;    
+    var recoveredworldwide=data4.Global.TotalRecovered; 
+    var counter = document.getElementById("counter3");    
     var c = $('#counter3').data('number'); //getter
     var z=""+recoveredworldwide;
     $('#counter3').data('number',z); //setter
+    counter.innerHTML = z;
 
     var totalcasesworldldwide=data4.Global.TotalConfirmed; 
+    var counter = document.getElementById("counter4"); 
     var d = $('#counter4').data('number'); //getter
     var o=""+totalcasesworldldwide;
     $('#counter4').data('number',o); //setter
+    counter.innerHTML = o;
 
     }
     getData();
@@ -116,25 +124,33 @@
       const data1=await response.json();
 
       var confirmedIndia=data1.statewise[0].confirmed;
+      var counter = document.getElementById("counter5");
       var a = $('#counter5').data('number'); //getter
       var x=""+confirmedIndia;
-      $('#counter5').data('number',x); //setter      
+      $('#counter5').data('number',x); //setter   
+      counter.innerHTML = x;   
       
-      var deathsIndia=data1.statewise[0].deaths;       
+      var deathsIndia=data1.statewise[0].deaths;    
+      var counter = document.getElementById("counter6");   
       var g = $('#counter6').data('number'); //getter
       var y=""+deathsIndia;
-      $('#counter6').data('number',y); //setter      
+      $('#counter6').data('number',y); //setter     
+      counter.innerHTML = y; 
     
       var recoveredIndia=data1.statewise[0].recovered; 
+      var counter = document.getElementById("counter7");
       var h = $('#counter7').data('number'); //getter
       var z=""+recoveredIndia;
-      $('#counter7').data('number',z); //setter      
+      $('#counter7').data('number',z); //setter 
+      counter.innerHTML = z;     
 
       var pos=data1.cases_time_series.length-1;
       var newcasesIndia=data1.cases_time_series[pos].dailyconfirmed;
+      var counter = document.getElementById("counter8");
       var j = $('#counter8').data('number'); //getter
       var o=""+newcasesIndia;
       $('#counter8').data('number',o); //setter
+      counter.innerHTML = o;
       
       }
       getData1();
@@ -152,21 +168,21 @@
 
         <div class="block-48 col-lg-3 col-12">
           <span class="block-48-text-1">New Cases Today - <b style="color:honeydew;">India</b></span>
-          <div class="block-48-counter ftco-number" id="counter6" data-number="" >0</div>              
+          <div class="block-48-counter ftco-number" ><span id="counter6">0</span></div>
         </div>  
         <div class="block-48 col-lg-3 col-12">
             <span class="block-48-text-1">Total Cases - <b style="color: honeydew;">India</b></span>
-            <div class="block-48-counter ftco-number" id="counter5" data-number="" >0</div>
+            <div class="block-48-counter ftco-number" ><span id="counter5">0</span></div>
           </div>       
       
         <div class="block-48 col-lg-3 col-12">
             <span class="block-48-text-1">Recovered - <b style="color: honeydew;">India</b></span>
-            <div class="block-48-counter ftco-number" id="counter7" data-number="" >0</div>
+            <div class="block-48-counter ftco-number" ><span id="counter7">0</span></div>
           </div>
 
           <div class="block-48 col-lg-3 col-12">
             <span class="block-48-text-1">Deaths - <b style="color: honeydew;">India</b></span>
-            <div class="block-48-counter ftco-number" id="counter8"  data-number="" >0</div>
+            <div class="block-48-counter ftco-number" ><span id="counter8">0</span></div>
           </div>      
         
       </div>
@@ -179,21 +195,21 @@
          
           <div class="block-48 col-lg-3 col-12">
             <span class="block-48-text-1">New Cases Today - <b style="color:honeydew;">Global</b></span>
-            <div class="block-48-counter ftco-number" id="counter1" data-number="">0</div>              
+            <div class="block-48-counter ftco-number" ><span id="counter1">0</span></div>              
           </div>  
           <div class="block-48 col-lg-3 col-12">
               <span class="block-48-text-1">Total Cases - <b style="color: honeydew;">Global</b></span>
-              <div class="block-48-counter ftco-number" id="counter4" data-number="" >0</div>
+              <div class="block-48-counter ftco-number"><span id="counter4">0</span></div>
             </div>       
         
           <div class="block-48 col-lg-3 col-12">
               <span class="block-48-text-1">Recovered - <b style="color: honeydew;">Global</b></span>
-              <div class="block-48-counter ftco-number" id="counter3" data-number="" >0</div>
+              <div class="block-48-counter ftco-number"><span id="counter3"></span></div>
             </div>
 
             <div class="block-48 col-lg-3 col-12">
               <span class="block-48-text-1">Deaths - <b style="color: honeydew;">Global</b></span>
-              <div class="block-48-counter ftco-number" id="counter2"  data-number="" >0</div>
+              <div class="block-48-counter ftco-number"><span id="counter2" ></span></div>
             </div>     
         
       </div>
