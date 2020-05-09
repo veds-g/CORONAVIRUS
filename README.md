@@ -1,1 +1,2 @@
-# CORONAVIRUS website.
+# CORONAVIRUS website link.
+covid19updater.netlify.app
